@@ -31,6 +31,7 @@ try {
     <div class="container">
     <h2 style="text-align:center;">設備列表</h2>
     <?php
+        echo "共有".$stmt->rowCount()."筆資料";
         echo "<table class=\"table table-hover\" id=\"myData\">";
         echo "<tr><th>&nbsp;</th>";
         echo "<th>品名</th>";
