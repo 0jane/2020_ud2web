@@ -2,6 +2,47 @@
     if (isset($_POST["submit"])) {
 
         echo "有收到!";
+        /* 取出表單資料 */
+        $devName = $_POST["devName"];
+        $model = $_POST["model"];
+        $price = $_POST["price"];
+        $purchaseDate = $_POST["purchaseDate"];
+        $specification = $_POST["specification"];
+        $depart = $_POST["depart"];
+        $manager = $_POST["manager"];
+        /*
+        echo "<p>品名".$devName."</p>";
+        echo "<p>型號".$model."</p>";
+        echo "<p>價格".$price."</p>";
+        echo "<p>購買日期".$purchaseDate."</p>";
+        echo "<p>詳細規格".$specification."</p>";
+        echo "<p>部門".$depart."</p>";
+        echo "<p>管理者".$manager."</p>";
+        */
+        $servername = "localhost";
+        $dbname   = "school";
+        $username = "school";
+        $password = "abc123";
+
+        try {
+
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+
+            // set the PDO error mode to exception
+            $conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $conn->prepare("INSERT INTO `device` (`devID`, `devName`, `model`, `price`, `purchaseDate`, `specification`, `depart`, `manager`) VALUES (NULL, '$devName', '$model', '$price', '$purchaseDate', '$specification', '$depart', '$manager');");
+            $stmt->execute();
+
+            header('Location: device_list.php');
+            exit();
+
+        } catch(PDOException $e) {
+
+            echo "無法連線 Connection failed: " . $e->getMessage();
+
+        }
+
 
     } else {
 ?>

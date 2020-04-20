@@ -51,6 +51,7 @@ try {
           echo "</tr>";
         }
         echo "</table>";
+        echo "<p><a href=\"device_add.php\">新增資料</a>";
       } catch(PDOException $e) {
         echo "無法連線 Connection failed: " . $e->getMessage();
     }
