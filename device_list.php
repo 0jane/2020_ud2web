@@ -25,11 +25,12 @@ try {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    
   </head>
   <body>
     <div class="container">
     <h2 style="text-align:center;">設備列表</h2>
+    
     <?php
         echo "共有".$stmt->rowCount()."筆資料";
         echo "<table class=\"table table-hover\" id=\"myData\">";
@@ -37,17 +38,24 @@ try {
         echo "<th>品名</th>";
         echo "<th>型號</th>";
         echo "<th>價格</th>";
-        echo "<th>購買日期</th></tr>";
+        echo "<th>購買日期</th><th>功能</th></tr>";
         $i=0;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC) )  {
           $i++;
           echo "<tr><td>$i</td>";
+          
           echo "<td><a href=\"device_show.php?id=";
           echo $row["devID"];
           echo "\">".$row["devName"]."</a></td>";
+          
           echo "<td>".$row["model"]."</td>";
           echo "<td>".$row["price"]."</td>";
           echo "<td>".$row["purchaseDate"]."</td>";
+
+          echo "<td><a href=\"device_dele.php?id=";
+          echo $row["devID"];
+          echo "\" onClick='return confirm(\"確定要刪除這筆資料嗎?\")'>"."刪除"."</a></td>";
+
           echo "</tr>";
         }
         echo "</table>";
