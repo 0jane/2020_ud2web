@@ -52,7 +52,11 @@ try {
           echo "<td>".$row["price"]."</td>";
           echo "<td>".$row["purchaseDate"]."</td>";
 
-          echo "<td><a href=\"device_dele.php?id=";
+          echo "<td><a href=\"device_edit.php?id=";
+          echo $row["devID"];
+          echo "\">"."修改"."</a> ";
+
+          echo "<a href=\"device_dele.php?id=";
           echo $row["devID"];
           echo "\" onClick='return confirm(\"確定要刪除這筆資料嗎?\")'>"."刪除"."</a></td>";
 
