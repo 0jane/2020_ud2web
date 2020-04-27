@@ -38,7 +38,8 @@ try {
         echo "<th>品名</th>";
         echo "<th>型號</th>";
         echo "<th>價格</th>";
-        echo "<th>購買日期</th><th>功能</th></tr>";
+        echo "<th>購買日期</th><th><a href=\"device_add.php\">新增資料</a></th></tr>";
+        
         $i=0;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC) )  {
           $i++;
@@ -63,7 +64,7 @@ try {
           echo "</tr>";
         }
         echo "</table>";
-        echo "<p><a href=\"device_add.php\">新增資料</a>";
+       
       } catch(PDOException $e) {
         echo "無法連線 Connection failed: " . $e->getMessage();
     }
