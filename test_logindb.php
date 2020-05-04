@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php
+session_start();
+if (isset($_GET["logout"]) && $_GET["logout"]=='1') {
+  unset($_SESSION["username"]);
+  session_destroy();
+}
+$showform = TRUE;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,20 +44,24 @@ try {
         if ($stmt->rowCount()==1) {
 
             $_SESSION["username"] = $_POST["username"];
-        
+            $showform = FALSE;
+
             if ($_POST['prev'] != "") {
                 header('Location: ' . $_POST['prev']);
                 exit();
             }
 
-            echo "你好 " . $_SESSION["username"];
-            echo "歡迎參觀!";
+            echo "<h1>你好 " . $_SESSION["username"]."</h1>";
+            echo "<p>歡迎參觀!</p>";
+            echo "<p><a href='?logout=1'>登出系統</a></p>";
+
 
         } else {
             $msg = $username." 帳號與密碼不正確!";
-        }
-       
+        } 
     } 
+
+    if ($showform) {
         $from = "";
         if (isset($_GET["from"])) $from=$_GET["from"];
         
@@ -69,7 +80,7 @@ try {
 </form>
 <?php       
     echo $msg;
-
+    }
 } catch(PDOException $e) {
     echo "無法連線 Connection failed: " . $e->getMessage();
 }
