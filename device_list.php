@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (isset($_GET["logout"]) && $_GET["logout"]=='1') {
+  unset($_SESSION["username"]);
+  session_destroy();
+}
 
 $servername = "localhost";
 $dbname   = "school";
@@ -32,13 +38,26 @@ try {
     <h2 style="text-align:center;">設備列表</h2>
     
     <?php
-        echo "共有".$stmt->rowCount()."筆資料";
+        if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
+          $ulogin = TRUE;
+        } else { $ulogin = FALSE; }
+
+        echo "共有".$stmt->rowCount()."筆資料 - ";
+        if ($ulogin) {
+          echo $_SESSION["username"]." <a href='?logout=1'>登出</a>";
+        } else {
+          echo "<a href='test_logindb.php?from=".$_SERVER['PHP_SELF']."'>登入</a>";
+        }
         echo "<table class=\"table table-hover\" id=\"myData\">";
         echo "<tr><th>&nbsp;</th>";
         echo "<th>品名</th>";
         echo "<th>型號</th>";
         echo "<th>價格</th>";
-        echo "<th>購買日期</th><th><a href=\"device_add.php\">新增資料</a></th></tr>";
+        echo "<th>購買日期</th>";
+        if ($ulogin) {
+        echo "<th><a href=\"device_add.php\">新增資料</a></th>";
+        }
+        echo "</tr>";
         
         $i=0;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC) )  {
@@ -53,6 +72,7 @@ try {
           echo "<td>".$row["price"]."</td>";
           echo "<td>".$row["purchaseDate"]."</td>";
 
+          if ($ulogin) {
           echo "<td><a href=\"device_edit.php?id=";
           echo $row["devID"];
           echo "\">"."修改"."</a> ";
@@ -60,6 +80,7 @@ try {
           echo "<a href=\"device_dele.php?id=";
           echo $row["devID"];
           echo "\" onClick='return confirm(\"確定要刪除這筆資料嗎?\")'>"."刪除"."</a></td>";
+          }
 
           echo "</tr>";
         }
