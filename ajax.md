@@ -24,3 +24,11 @@ AJAX 應用可以僅向伺服器傳送並取回指定資料，接著在客戶端
 - 使用者在「瀏覽器」觸發一個事件，例如點擊按鈕
 - 將上述獲的事件的同時，使用 JavaScript 的 XMLHttpRequest 物件，在背景對「Web 伺服器」發送一個 HTTP 請求，達到與「Web 伺服器」進行資料的非同步交換
 - 將從「Web 伺服器」取得的資料，使用 JavaScript 操作 DOM，來實現動態局部更新「瀏覽器」的網頁內容
+
+PHP jquery ajax post request example - https://www.itsolutionstuff.com/post/php-jquery-ajax-post-request-exampleexample.html
+
+Simple PHP Jquery Ajax CRUD(insert update delete) tutorial example with source code - https://www.itsolutionstuff.com/post/simple-php-jquery-ajax-crudinsert-update-delete-tutorial-example-with-source-codeexample.html
+
+AJAX JavaScript 與 jQuery 教學範例 for PHP - https://www.footmark.info/programming-language/php/ajax-javascript-jquery-example-php/
+
+
