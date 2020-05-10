@@ -31,4 +31,4 @@ Simple PHP Jquery Ajax CRUD(insert update delete) tutorial example with source c
 
 AJAX JavaScript 與 jQuery 教學範例 for PHP - https://www.footmark.info/programming-language/php/ajax-javascript-jquery-example-php/
 
-
+PHP jQuery ajax - http://www.pureexample.com/tw/jquery/ajax.html
