@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <script>
+        function getVote(int) {
+          var xmlhttp=new XMLHttpRequest();
+          xmlhttp.onreadystatechange=function() {
+            if (this.readyState==4 && this.status==200) {
+              document.getElementById("poll").innerHTML=this.responseText;
+            }
+          }
+          xmlhttp.open("GET","poll_vote.php?vote="+int,true);
+          xmlhttp.send();
+        }
+        </script>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="poll">
+            <h3>Do you like PHP and AJAX so far?</h3>
+            <form>
+            Yes: <input type="radio" name="vote" value="0" onclick="getVote(this.value)"><br>
+            No: <input type="radio" name="vote" value="1" onclick="getVote(this.value)">
+            </form>
+            </div>
+
+        
+    </body>
+</html>
