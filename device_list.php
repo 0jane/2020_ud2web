@@ -33,12 +33,12 @@ try {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./node_modules/datatables.net-dt/css/jquery.dataTables.min.css">
-    
+
   </head>
   <body>
     <div class="container">
     <h2 style="text-align:center;">設備列表</h2>
-    
+
     <?php
         if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
           $ulogin = TRUE;
@@ -51,25 +51,28 @@ try {
           echo "<a href='test_logindb.php?from=".$_SERVER['PHP_SELF']."'>登入</a>";
         }
         echo "<table class=\"table table-hover\" id=\"myData\">";
+        echo "<thead>";
         echo "<tr><th>&nbsp;</th>";
         echo "<th>品名</th>";
         echo "<th>型號</th>";
         echo "<th>價格</th>";
         echo "<th>購買日期</th>";
         if ($ulogin) {
-        echo "<th><a href=\"device_add.php\">新增資料</a></th>";
+          echo "<th><a href=\"device_add.php\">新增資料</a></th>";
         }
         echo "</tr>";
-        
+        echo "</thead>";
+        echo "<tbody>";
+
         $i=0;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC) )  {
           $i++;
           echo "<tr><td>$i</td>";
-          
+
           echo "<td><a href=\"device_show.php?id=";
           echo $row["devID"];
           echo "\">".$row["devName"]."</a></td>";
-          
+
           echo "<td>".$row["model"]."</td>";
           echo "<td>".$row["price"]."</td>";
           echo "<td>".$row["purchaseDate"]."</td>";
@@ -86,8 +89,9 @@ try {
 
           echo "</tr>";
         }
+        echo "</tbody>";
         echo "</table>";
-       
+
       } catch(PDOException $e) {
         echo "無法連線 Connection failed: " . $e->getMessage();
     }
