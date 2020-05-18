@@ -29,11 +29,12 @@ try {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./node_modules/datatables.net-dt/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="modal.css">
   </head>
   <body>
     <div class="container">
@@ -48,10 +49,12 @@ try {
         if ($ulogin) {
           echo $_SESSION["username"]." <a href='?logout=1'>登出</a>";
         } else {
-          echo "<a href='test_logindb.php?from=".$_SERVER['PHP_SELF']."'>登入</a>";
+          echo "<a href='#myModal' class='trigger-btn' data-toggle='modal'>登入</a>";
         }
         echo "<table class=\"table table-hover\" id=\"myData\">";
+
         echo "<thead>";
+
         echo "<tr><th>&nbsp;</th>";
         echo "<th>品名</th>";
         echo "<th>型號</th>";
@@ -62,6 +65,7 @@ try {
         }
         echo "</tr>";
         echo "</thead>";
+
         echo "<tbody>";
 
         $i=0;
@@ -90,6 +94,7 @@ try {
           echo "</tr>";
         }
         echo "</tbody>";
+
         echo "</table>";
 
       } catch(PDOException $e) {
@@ -97,6 +102,37 @@ try {
     }
     ?>
     </div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title">Member Login</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="/examples/actions/confirmation.php" method="post">
+					<div class="form-group">
+						<i class="fa fa-user"></i>
+						<input type="text" class="form-control" placeholder="Username" required="required">
+					</div>
+					<div class="form-group">
+						<i class="fa fa-lock"></i>
+						<input type="password" class="form-control" placeholder="Password" required="required">					
+					</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+					</div>
+				</form>				
+				
+			</div>
+			<div class="modal-footer">
+				<a href="#">Forgot Password?</a>
+			</div>
+		</div>
+	</div>
+</div>  
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
