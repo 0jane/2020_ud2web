@@ -104,7 +104,7 @@ try {
     </div>
 
 <!-- Modal HTML -->
-<div id="myModal" class="modal fade">
+<div id="myModal" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static">
 	<div class="modal-dialog modal-login">
 		<div class="modal-content">
 			<div class="modal-header">				
@@ -112,17 +112,17 @@ try {
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<form action="/examples/actions/confirmation.php" method="post">
+				<form action="" method="post">
 					<div class="form-group">
 						<i class="fa fa-user"></i>
-						<input type="text" class="form-control" placeholder="Username" required="required">
+						<input type="text" class="form-control" placeholder="Username" required="required" id="username">
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" required="required">					
+						<input type="password" class="form-control" placeholder="Password" required="required" id="uesrpass">
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+						<button class="btn btn-primary btn-block btn-lg" id="login_button">登入系統</button>
 					</div>
 				</form>				
 				
@@ -143,7 +143,52 @@ try {
     <script>
       $(document).ready( function () {
         $('#myData').DataTable();
-      } );
+
+               
+
+        $('#login_button').click(function(){  
+           var username = $('#username').val();  
+           var userpass = $('#userpass').val();  
+           if(username != '' && userpass != '')  
+           {  
+                $.ajax({  
+                     url:"action.php",  
+                     method:"POST",  
+                     data: {username:username, userpass:userpass},  
+                     success:function(data)  
+                     {  
+                          //alert(data);  
+                          if(data == 'No')  
+                          {  
+                               alert("無法登入");
+                          }  
+                          else  
+                          {  
+                               $('#myModal').hide();
+                               location.reload();  
+                          }  
+                     }  
+                });  
+           }  
+           else  
+           {  
+                alert("兩個欄位都要填寫!");
+           }  
+      });  
+      $('#logout').click(function(){  
+           var action = "logout";
+           $.ajax({
+                url:"action.php",  
+                method:"POST",  
+                data:{action:action},
+                success:function()
+                {  
+                     location.reload();  
+                }  
+           });  
+      });  
+      });
+
     </script>
   </body>
 </html>
