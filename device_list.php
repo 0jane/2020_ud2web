@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+/*
 if (isset($_GET["logout"]) && $_GET["logout"]=='1') {
   unset($_SESSION["username"]);
   session_destroy();
 }
+*/
 
 $servername = "localhost";
 $dbname   = "school";
@@ -33,7 +35,7 @@ try {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="./node_modules/datatables.net-dt/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="modal.css">
   </head>
   <body>
@@ -47,7 +49,7 @@ try {
 
         echo "共有".$stmt->rowCount()."筆資料 - ";
         if ($ulogin) {
-          echo $_SESSION["username"]." <a href='?logout=1'>登出</a>";
+          echo $_SESSION["username"]." <a href='#' id='logout'>登出</a>";
         } else {
           echo "<a href='#myModal' class='trigger-btn' data-toggle='modal'>登入</a>";
         }
@@ -119,7 +121,7 @@ try {
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" required="required" id="uesrpass">
+						<input type="password" class="form-control" placeholder="Password" required="required" id="userpass">
 					</div>
 					<div class="form-group">
 						<button class="btn btn-primary btn-block btn-lg" id="login_button">登入系統</button>
@@ -139,48 +141,57 @@ try {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="./node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script>
       $(document).ready( function () {
+
         $('#myData').DataTable();
 
-               
-
         $('#login_button').click(function(){  
-           var username = $('#username').val();  
-           var userpass = $('#userpass').val();  
+           var username = $('#username').val();
+           var userpass = $('#userpass').val();
+
            if(username != '' && userpass != '')  
            {  
                 $.ajax({  
-                     url:"action.php",  
-                     method:"POST",  
-                     data: {username:username, userpass:userpass},  
-                     success:function(data)  
+                     url:"action.php",
+
+                     method:"POST",
+
+                     data: {"action":"login", "username":username, "userpass":userpass},
+
+                     success:function(data)
                      {  
-                          //alert(data);  
-                          if(data == 'No')  
+                          if(data == 'Yes')
                           {  
-                               alert("無法登入");
+                               alert("成功登入系統...");
+                               // $('#myModal').hide();
+                               location.reload();
                           }  
-                          else  
-                          {  
-                               $('#myModal').hide();
-                               location.reload();  
-                          }  
-                     }  
+                          else
+                          { 
+                               alert("帳密找不到...");
+                          } 
+                           
+                     },
+                     error:function(data)  {
+                       alter('無法登入');
+                     }
+
                 });  
            }  
            else  
            {  
                 alert("兩個欄位都要填寫!");
            }  
-      });  
+      });
+
       $('#logout').click(function(){  
            var action = "logout";
            $.ajax({
                 url:"action.php",  
                 method:"POST",  
-                data:{action:action},
+                data:{"action":action},
                 success:function()
                 {  
                      location.reload();  
