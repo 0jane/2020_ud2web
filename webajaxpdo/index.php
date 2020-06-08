@@ -6,7 +6,6 @@ include 'database.php';
 if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
 	$ulogin = TRUE;
 } else { $ulogin = FALSE; }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,15 +13,16 @@ if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>User Data</title>
+	<title>使用者管理</title>
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<script src="ajax.js"></script>
 </head>
 <body>
@@ -32,17 +32,17 @@ if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-						<h2>Manage <b>Users</b></h2>
+						<h2><b>使用者Users</b></h2>
 					</div>
 					<div class="col-sm-6">
 						<?php if ($ulogin)	{ ?>
 
 						<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="material-icons"></i> <span>刪除</span></a>
 						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i> <span>新增</span></a>
-						<a href="#" class="btn btn-success" data-toggle="modal" id="logout"><i class="material-icons"></i> <span><?php echo $_SESSION['username']; ?> 登出</span></a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" id="logout"><i class="material-icons">account_circle</i> <span><?php echo $_SESSION['username']; ?> 登出</span></a>
 						
 						<?php } else { ?>
-						<a href="#userLoginModal" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i> <span>登入</span></a>
+						<a href="#userLoginModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons account_box">account_circle</i><span>登入</span></a>
 						<?php } ?>
 					</div>
                 </div>
@@ -71,9 +71,16 @@ if (isset($_SESSION["username"]) && $_SESSION["username"]!="") {
 				<tbody>
 				
 				<?php
-				$result = mysqli_query($conn,"SELECT * FROM user_data");
+
+				$sql = "SELECT * FROM user_data";
+		
+				$stmt = $conn->prepare($sql);
+				$stmt->execute();
+				// $result = mysqli_query($conn,);
+
 				$i=1;
-				while($row = mysqli_fetch_array($result)) {
+				// while($row = mysqli_fetch_array($result)) {
+				while ($row = $stmt->fetch(PDO::FETCH_ASSOC) )  {
 				?>
 				<tr id="<?php echo $row["id"]; ?>">
 				<td>
